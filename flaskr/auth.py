@@ -95,3 +95,27 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+@bp.route('/chancemail', methods=('GET', 'POST'))
+@login_required
+def cambioEmail():
+    if request.method == 'POST':
+        gmail = request.form['gmail']
+        error = None
+        if not gmail:
+            error = 'Title is required.'
+
+        if error is not None:
+            flash(error)
+        else:
+            db = get_db()
+            db.execute
+            (
+                'UPDATE user (email, id)'
+                ' VALUES (?)',
+                (gmail, g.user['id'])
+            )
+            db.commit()
+            return redirect(url_for('blog.index'))
+
+    return render_template('auth/chancemail.html')
